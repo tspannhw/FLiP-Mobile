@@ -9,3 +9,6 @@ bin/pulsar-admin topics list public/default
 bin/pulsar-client consume "persistent://public/default/energy" -s mobile1
 
 python -m SimpleHTTPServer 8000
+
+
+# Send data via runenergy.sh on nvidia2gb
