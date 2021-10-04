@@ -7,44 +7,55 @@
     border: 1px solid gray;
 }
 </style>
-<title>Web Page For Apache Pulsar Websocket Consumed Data</title>
+<title>Web Page For Pulsar Fed Data</title>
 </head>
 <body bgcolor="white" text="black">
-<B>Apache Pulsar to Websockets And Read With Web Page Demo</b>
+<B>Pulsar to Websockets Demo</b>
 <br><br>
 <br><b>Receiving Updated Pulsar Data:</b>
+<br><br>
+    <input type="text" id="pulsarmessage">
+    <input type="button" id="send" value="Send">
+
 <br><br>
 <div id="results"> </div>
 
 <br><br>
+
 <script>
-//function to check if element is scrolled to the bottom
-function isElementScrolledToBottom(el) {
-  if (el.scrollTop >= (el.scrollHeight - el.offsetHeight)) {
-      return true;
-  }
-  return false;
+function sendMessage(type, payload) {
+	websocket.send(makeMessage(type, payload));
 }
 
-//https://stackoverflow.com/questions/54768752/autoscroll-div-when-content-is-added
-//function to scroll to bottom
-function scrollToBottom(el) {
-  el.scrollTop = el.scrollHeight;
+function makeMessage(type, payload) {
+	return JSON.stringify({
+		'type': type,
+		'payload': payload
+	});
 }
+
 
 var wsUri = "ws://192.168.1.181:8080/ws/v2/consumer/persistent/public/default/energy/mobile1?subscriptionType=Shared";
+
+// 192.168.1.181:8080/ws/v2/producer/persistent/public/default/energy
+// ws://broker-service-url:8080/path?token=token
+
 websocket = new WebSocket(wsUri);
 websocket.onopen = function(evt) {
    console.log('open');
+ //   sendMessage('publish', {
+   //     "message": document.getElementById("pulsarmessage")
+   // });
+
 };
 websocket.onerror = function(evt) {console.log('ERR', evt)};
 websocket.onmessage = function(evt) {
-//    console.log(evt.data);
+    console.log(evt.data);
 
     var dataPoints = JSON.parse(evt.data);
- //   console.log(dataPoints.messageId);
-  //  console.log(dataPoints.key);
-   // console.log(dataPoints.publishTime);
+    console.log(dataPoints.messageId);
+    console.log(dataPoints.key);
+    console.log(dataPoints.publishTime);
 /***
 {"current": 0.261748, "voltage": 116.92964, "power": 15.644678, "total": 3.472, "sw_ver": "1.2.5 Build 171206 Rel.085954", "hw_ver": "1.0", "type": "IOT.SMARTPLUGSWITCH", "model": "HS110(US)", "mac": "50:C7:BF:B1:95:D5", "deviceId": "8006ECB1D454C4428953CB2B34D9292D18A6DB0E", "hwId": "60FF6B258734EA6880E186F8C96DDC61", "fwId": "00000000000000000000000000000000", "oemId": "FFF22CFF774A0B89F7624BFC6F50D5DE", "alias": "Fan", "dev_name": "Wi-Fi Smart Plug With Energy Monitoring", "icon_hash": "", "relay_state": 1, "on_time": 3275342, "active_mode": "schedule", "feature": "TIM:ENE", "updating": 0, "rssi": -79, "led_off": 0, "latitude": 40.268272, "longitude": -74.529139, "day1": 0.066, "day2": 0, "day3": 0, "day4": 0.042, "index": 18, "zone_str": "(UTC-05:00) Eastern Daylight Time (US & Canada)", "tz_str": "EST5EDT,M3.2.0,M11.1.0", "dst_offset": 60, "month1": 0.001, "month2": 0.002, "month3": 1.08, "month4": 0.924, "month5": 0.303, "month6": 0.315, "month7": 0.549, "month8": 0.914, "month9": 3.364, "month10": 0.108, "host": "192.168.1.243", "current_consumption": 15.62496, "devicetime": "10/04/2021 14:28:10", "ledon": true, "end": "1633372090.5263543", "te": "0.28470897674560547", "systemtime": "10/04/2021 14:28:10", "cpu": 3.8, "memory": 28.9, "diskusage": "32311.5", "uuid": "20211004182810_4f272186-c12b-4ca7-a95e-ec69e2e6cc3c", "macaddress": "1c:bf:ce:1a:7f:a0"}
 Message published successfully
@@ -54,27 +65,33 @@ Message published successfully
 
     var output = document.getElementById("results");
     var dataBuffer = "<p>";
-//    dataBuffer += "<b>Message ID:</b> " + dataPoints.messageId;
-//    dataBuffer += " <b>Key:</b> " + dataPoints.key;
-    dataBuffer += " <b>Publish Time:</b> " + dataPoints.publishTime;
-//    dataBuffer += " <b>Msg:</b> "+ atob(dataPoints.payload);
-    var pulsarMessage = JSON.parse(atob(dataPoints.payload));
-    dataBuffer += " <b>Current Cons:</b> " + pulsarMessage.current_consumption;
-    dataBuffer += " <b>Current:</b> " + pulsarMessage.current;
-    dataBuffer += " <b>Voltage:</b> " + pulsarMessage.voltage;
-    dataBuffer += " <b>Power:</b> " + pulsarMessage.power;
-    dataBuffer += " <b>Total:</b> " + pulsarMessage.total;
-    dataBuffer += " <b>Dev Time:</b> " + pulsarMessage.devicetime;
-    dataBuffer += " <b>Sys Time:</b> " + pulsarMessage.systemtime;
+    dataBuffer += "<b>Message ID:</b> " + dataPoints.messageId;
+    dataBuffer += " <b>Key:</b> " + dataPoints.key;
+    dataBuffer += " <b>Publish Time:</b> " + dataPoints.publishTime + "</p>";
 
-   // maybe day1... month1...
-   // te, uuid, host, end, diskusage, deviceId, cpu
-  //  console.log(pulsarMessage);    
-    output.innerHTML = output.innerHTML +  dataBuffer + "</p>";
-    scrollToBottom(output);
+    console.log(atob(dataPoints.payload));
+
+//    for(var i=0;i<dataPoints.length;i++)
+ //   {
+  //     dataBuffer +=  "" + dataPoints[i].messageId + "," + dataPoints[i].key + "<br>";
+
+       // payload
+       //properties
+       //publishTime
+       //key
+       //redeliveryCount
+        /* dataBuffer += " <img src=\"" + dataPoints[i].icon_url_base + dataPoints[i].icon_url_name + "\"> &nbsp;" +  dataPoints[i].location + 
+                      dataPoints[i].station_id  + "@" +  dataPoints[i].latitude   + ":" +
+                      dataPoints[i].longitude  + "@" +  dataPoints[i].observation_time +
+                      dataPoints[i].temperature_string + "," + dataPoints[i].relative_humidity + "," +
+                      dataPoints[i].wind_string +"<br>";     
+       */
+   // }   
+    output.innerHTML = output.innerHTML +  dataBuffer + "</p><br>";
 };
 
 </script>
+
 &copy; 2021 Tim Spann
 </body>
 </html>
