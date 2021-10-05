@@ -8,6 +8,10 @@ Building Mobile and Web Apps Utilizing Web Sockets and Apache Pulsar
 ws://broker-service-url:8080/path?token=token
 ```
 
+## Example Running SPA
+
+(image)[https://raw.githubusercontent.com/tspannhw/FLiP-Mobile/main/pulsarsockets.jpg]
+
 ## Example Streaming Links
 
 ```
