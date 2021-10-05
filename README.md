@@ -10,7 +10,7 @@ ws://broker-service-url:8080/path?token=token
 
 ## Example Running SPA
 
-(image)[https://raw.githubusercontent.com/tspannhw/FLiP-Mobile/main/pulsarsockets.jpg]
+[image](https://raw.githubusercontent.com/tspannhw/FLiP-Mobile/main/pulsarsockets.jpg)
 
 ## Example Streaming Links
 
