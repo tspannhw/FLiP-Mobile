@@ -8,6 +8,14 @@ Building Mobile and Web Apps Utilizing Web Sockets and Apache Pulsar
 ws://broker-service-url:8080/path?token=token
 ```
 
+## Build a subscription and test that data is in the topic
+
+```
+bin/pulsar-client consume energy -s "energy-checker"
+
+
+```
+
 ## Example Running SPA
 
 ![image](https://raw.githubusercontent.com/tspannhw/FLiP-Mobile/main/pulsarsockets.jpg)
@@ -20,7 +28,6 @@ ws://broker-service-url:8080/ws/v2/producer/persistent/:tenant/:namespace/:topic
 ws://broker-service-url:8080/ws/v2/consumer/persistent/:tenant/:namespace/:topic/:subscription
 
 ```
-
 
 ## Resources
 
