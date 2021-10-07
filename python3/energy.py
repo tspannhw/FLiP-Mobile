@@ -12,7 +12,7 @@ import requests
 import websocket, base64, json
 
 scheme = 'ws'
-TOPIC = scheme + '://192.168.1.181:8080/ws/v2/producer/persistent/public/default/energy'
+TOPIC = scheme + '://192.168.1.63:8080/ws/v2/producer/persistent/public/default/energy'
 ws = websocket.create_connection(TOPIC)
 
 # Get MAC address of a local interfaces
