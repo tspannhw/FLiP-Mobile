@@ -147,10 +147,9 @@ function loadDoc() {
 var wsUri = "ws://nvidia-desktop:8080/ws/v2/producer/persistent/public/default/clickstream";
 websocket = new WebSocket(wsUri);
 
-const pulsarObject = {plugins: pluginsInfo, screen: screenInfo, cores: coresInfo, downinfo: downInfo, rtt: rttInfo, effectiveInfo: effectiveInfo, saveData: saveDataInfo,
+const pulsarObject = {battery: batteryInfo, plugins: pluginsInfo, screen: screenInfo, cores: coresInfo, downinfo: downInfo, rtt: rttInfo, effectiveInfo: effectiveInfo, saveData: saveDataInfo,
                       product: document.getElementById('product-id').value, productSize: document.getElementById('product-size-id').value, comment: document.getElementById('other-field-id').value};
 const jsonStr = JSON.stringify(pulsarObject);
-console.log(jsonStr);
 var payloadStr = btoa(jsonStr);
 const propertiesObject = {key: Date.now() }
 var data = JSON.stringify({ "payload": payloadStr, "properties": propertiesObject, "context": "cs" });
@@ -160,7 +159,7 @@ websocket.onopen = function(evt) {
 };
 websocket.onerror = function(evt) {console.log('ERR', evt)};
 websocket.onmessage = function(evt) {
-        console.log(evt.result);
+        console.log("sent");
 }
 websocket.onclose = function(evt) {
   if (evt.wasClean) {
