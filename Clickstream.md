@@ -28,3 +28,4 @@ key:[null], properties:[key=1636142420856], content:{"plugins":"PDF Viewer, Chro
 ### Reference
 
 * https://pulsar.apache.org/docs/en/client-libraries-websocket/
+* https://javascript.info/websocket
