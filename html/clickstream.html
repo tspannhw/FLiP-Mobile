@@ -409,6 +409,31 @@ form.onsubmit = function() {
         xhr.open('POST', uri, true);
         // Fire!
         xhr.send(formData);
+	  
+	  // ws://broker-service-url:8080/ws/v2/producer/persistent/:tenant/:namespace/:topic 
+	  // https://pulsar.apache.org/docs/en/client-libraries-websocket/
+	  //{
+  //"payload": "SGVsbG8gV29ybGQ=",
+  //"properties": {"key1": "value1", "key2": "value2"},
+  //"context": "1"
+//}
+	//  var encodedStringBtoA = btoa(jsonString);
+	//  console.log(encodedStringBtoA);
+	  
+	  var wsUri = "ws://localhost:8080/ws/v2/producer/persistent/public/default/clickstream";
+websocket = new WebSocket(wsUri);
+websocket.onopen = function(evt) {
+   console.log('open');
+};
+websocket.onerror = function(evt) {console.log('ERR', evt)};
+websocket.onmessage = function(evt) {
+//    console.log(evt.data);
+
+    var dataPoints = JSON.parse(evt.data);
+	
+}
+	  
+	  
 }
 </script>
 </body>
