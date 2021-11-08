@@ -37,3 +37,4 @@ key:[null], properties:[key=1636144174694], content:{"battery":"battery.level=1,
 
 * https://pulsar.apache.org/docs/en/client-libraries-websocket/
 * https://javascript.info/websocket
+* https://en.wikipedia.org/wiki/WebSocket#WebSocket_protocol_handshake
