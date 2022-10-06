@@ -1,5 +1,3 @@
-root@rp4:/home/pi# cd /opt/demo
-root@rp4:/opt/demo# cat enviro.py 
 from time import sleep
 from math import isnan
 import time
